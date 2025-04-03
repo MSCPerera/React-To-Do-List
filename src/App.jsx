@@ -23,24 +23,19 @@ import React, {useState, useEffect} from "react";
     setDate(updatedTodoList);
     localStorage.setItem("todo-data", JSON.stringify(updatedTodoList))
     setInput("");
+  };
+
+  const completeTodo = (index) => {
+    const updatedTodoList = [...data];
+    updatedTodoList[index].complete = !updatedList[index].complete;
+    setDate(updatedList);
+    localStorage.setItem("todo-data", JSON.stringify(updatedList))
   }
 
   return (
     <div>
-      <input 
-        value={input} 
-        type="text" 
-        onChange={(e) => {
-          setInput(e.target.value);
-        }}
-      />
-      <button
-       onClick={() => {
-        addNewTodo;
-        }}
-      >
-        Add new todo
-      </button>
+      <input value={input} type="text" onChange={(e) => { setInput(e.target.value); }} />
+      <button onClick={() => { addNewTodo; }} > Add new todo </button>
 
       <hr />
 
@@ -49,7 +44,11 @@ import React, {useState, useEffect} from "react";
           <div>
             <ol>
               {data.map((todo, index) => (
-                <p>{todo.text}</p>
+                <div key={index} style={{ display: "flex" }}>
+                  <p>{todo.text}</p>
+                  <button>Delete</button>
+                  <button onClick={() => completeTodo(index)} key={index}>{todo.complete ? "OK" : "CANCEL"}</button>
+                </div>
               ))}
             </ol>
           </div>
