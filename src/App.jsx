@@ -21,7 +21,7 @@ import React, {useState, useEffect} from "react";
     const newTodo = {text: input, complete: false}
     const updatedTodoList = [...data, newTodo]
     setDate(updatedTodoList);
-    localStorage.setItem("todo-data", JSON.stringify(updatedTodoList))
+    localStorage.setItem("todo-data", JSON.stringify(updatedTodoList));
     setInput("");
   };
 
@@ -29,7 +29,14 @@ import React, {useState, useEffect} from "react";
     const updatedTodoList = [...data];
     updatedTodoList[index].complete = !updatedList[index].complete;
     setDate(updatedList);
-    localStorage.setItem("todo-data", JSON.stringify(updatedList))
+    localStorage.setItem("todo-data", JSON.stringify(updatedList));
+  };
+
+  const deleteTodo = (index) => {
+    const updatedData = [...data];
+    updatedData.splice(index, 1);
+    setDate(updatedData);
+    localStorage.setItem("todo-data", JSON.stringify(updatedData));
   }
 
   return (
@@ -46,7 +53,7 @@ import React, {useState, useEffect} from "react";
               {data.map((todo, index) => (
                 <div key={index} style={{ display: "flex" }}>
                   <p>{todo.text}</p>
-                  <button>Delete</button>
+                  <button onClick={() => {deleteTodo(index)}}>Delete</button>
                   <button onClick={() => completeTodo(index)} key={index}>{todo.complete ? "OK" : "CANCEL"}</button>
                 </div>
               ))}
